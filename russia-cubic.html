@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>russsia-cubic</title>
+
+</head>
+<body>
+	<p>author:YAO Shenglong</p>
+	<p>score: <span id="score"></span></p>
+	<canvas id="can" width="600px" height="600px" style="background: Black">
+		<script type="text/javascript">
+		var cubic1= [[13,5],[14,5],[15,5],[16,5]];
+		var cubic2= [[12,1],[13,1],[13,2],[14,2]];
+		var cubic3= [[13,1],[13,2],[13,3],[14,3]];
+		var cubic4= [[13,2],[12,3],[13,3],[14,3]];
+		var cubic5= [[12,1],[13,1],[12,2],[13,2]];
+		var inicubic=[cubic1,cubic2,cubic3,cubic4,cubic5];
+		var ini=0;
+		var ctx = document.getElementById("can").getContext("2d");
+		var _s=document.getElementById("score")
+		_s.innerHTML="0";
+		var s=0;
+		var map = [];
+
+
+		function initialmap(){
+			for (var i = 0; i < 30; i++) {
+        		map.push([0])
+        		for (var j = 0; j < 30; j++) {
+            		map[i][j] = 0;
+        		}
+    		}
+		}
+
+		
+		function xyspin(x,y){
+			var arr=[x,y];
+			arr[0]=(-1)*y;
+			arr[1]=x;
+			return arr;
+			
+		}
+
+
+		function spin(){
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Black");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Black");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Black");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Black");
+			x1=cubic[0][0];
+			y1=cubic[0][1];
+			x2=cubic[1][0];
+			y2=cubic[1][1];
+			x3=cubic[2][0];
+			y3=cubic[2][1];
+			x4=cubic[3][0];
+			y4=cubic[3][1];
+			dx2=x2-x1;
+			dy2=y2-y1;
+			dx3=x3-x1;
+			dy3=y3-y1;
+			dx4=x4-x1;
+			dy4=y4-y1;
+			cubic[1][0]=x1+xyspin(dx2,dy2)[0];
+			cubic[1][1]=y1+xyspin(dx2,dy2)[1];
+			cubic[2][0]=x1+xyspin(dx3,dy3)[0];
+			cubic[2][1]=y1+xyspin(dx3,dy3)[1];
+			cubic[3][0]=x1+xyspin(dx4,dy4)[0];
+			cubic[3][1]=y1+xyspin(dx4,dy4)[1];
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Yellow");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Yellow");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Yellow");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Yellow");
+		}
+
+
+		function draw(x,y,c){
+			ctx.fillStyle = c;
+			ctx.fillRect(x,y,18,18);
+		}
+
+
+		function movedown(){
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Black");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Black");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Black");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Black");
+			cubic[0][1]+=1;
+			cubic[1][1]+=1;
+			cubic[2][1]+=1;
+			cubic[3][1]+=1;
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Yellow");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Yellow");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Yellow");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Yellow");
+		}
+
+
+		function moveright(){
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Black");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Black");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Black");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Black");
+			cubic[0][0]+=1;
+			cubic[1][0]+=1;
+			cubic[2][0]+=1;
+			cubic[3][0]+=1;
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Yellow");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Yellow");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Yellow");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Yellow");
+		}
+
+
+		function moveleft(){
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Black");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Black");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Black");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Black");
+			cubic[0][0]-=1;
+			cubic[1][0]-=1;
+			cubic[2][0]-=1;
+			cubic[3][0]-=1;
+			draw(cubic[0][0]*20+1,cubic[0][1]*20+1,"Yellow");
+			draw(cubic[1][0]*20+1,cubic[1][1]*20+1,"Yellow");
+			draw(cubic[2][0]*20+1,cubic[2][1]*20+1,"Yellow");
+			draw(cubic[3][0]*20+1,cubic[3][1]*20+1,"Yellow");
+		}
+
+		function fast(){
+			
+		}
+
+
+		function setup(){
+			ini=Math.floor(Math.random()*5)
+			cubic=[[inicubic[ini][0][0],inicubic[ini][0][1]],
+			[inicubic[ini][1][0],inicubic[ini][1][1]],
+			[inicubic[ini][2][0],inicubic[ini][2][1]],
+			[inicubic[ini][3][0],inicubic[ini][3][1]]]
+		}
+
+
+		function judge(){
+			var a=true;
+			var y1=cubic[0][1]+1;
+			var y2=cubic[1][1]+1;
+			var y3=cubic[2][1]+1;
+			var y4=cubic[3][1]+1;
+			if(y1>29||y2>29||y3>29||y4>29){
+				a=false;
+			}
+			else{
+				if(map[cubic[0][0]][y1]==1||
+					map[cubic[1][0]][y2]==1||
+					map[cubic[2][0]][y3]==1||
+					map[cubic[3][0]][y4]==1){
+					a=false;
+				};
+			};
+			return a;
+		}
+		
+		
+
+		function rangeleft(){
+			var a=true;
+			var x12=cubic[0][0]-1;
+			var x22=cubic[1][0]-1;
+			var x32=cubic[2][0]-1;
+			var x42=cubic[3][0]-1;
+			if(
+				x12<0||x12>29||
+				x22<0||x22>29||
+				x32<0||x32>29||
+				x42<0||x42>29){
+					a=false;
+				}
+			return a;
+		}
+
+
+		function rangeright(){
+			var a=true;
+			var x11=cubic[0][0]+1;
+			var x21=cubic[1][0]+1;
+			var x31=cubic[2][0]+1;
+			var x41=cubic[3][0]+1;
+			if(x11<0||x11>29||
+				x21<0||x21>29||
+				x31<0||x31>29||
+				x41<0||x41>29){
+					a=false;
+			}
+			return a;
+		}
+
+
+		function fill(){
+			map[cubic[0][0]][cubic[0][1]]=1;
+			map[cubic[1][0]][cubic[1][1]]=1;
+			map[cubic[2][0]][cubic[2][1]]=1;
+			map[cubic[3][0]][cubic[3][1]]=1;
+		}
+
+
+		function score(){
+			for (let i = 0; i < 30; i++) {
+				var sumline=0;
+				for(let j = 0; j < 30; j++)
+				if(map[j][i]==1){
+					sumline+=1;
+				}
+				if(sumline==30){
+					s+=10;
+					for (let ai =i; ai > 0; ai--) {
+						for(let aj = 0; aj < 30; aj++){
+							map[aj][ai]=map[aj][ai-1]
+						}
+					}
+					for (let i = 0; i < 30; i++) {
+						for(let j = 0; j < 30; j++){
+							if(map[j][i]==1){
+								draw(j*20+1,i*20+1,"Yellow");
+							}	
+							else{
+								draw(j*20+1,i*20+1,"Black");
+							}
+						}
+					}
+				}
+			}
+			_s.innerHTML=s.toString();
+		}
+
+
+		document.onkeydown=function(e){
+			var keycode=(e || event).keyCode;
+			if(keycode==38){
+				spin();
+			}
+			if(keycode==37&&rangeleft()){
+				moveleft();
+			}
+			if(keycode==39&&rangeright()){
+				moveright();
+			}
+		}
+
+
+
+
+// IIFE
+		initialmap();
+		setup();
+		spin();
+		!function() {
+			if(judge()){
+				movedown();
+			}
+			else{
+				fill();
+				setup();
+				score();
+			}
+			
+			setTimeout(arguments.callee, 150);
+		}();
+
+	</script>
+	</canvas>
+</body>
+</html>
